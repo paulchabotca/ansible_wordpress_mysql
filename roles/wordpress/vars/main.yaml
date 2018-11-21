@@ -1,0 +1,8 @@
+---
+wordpress_url: "https://wordpress.org/latest"
+default_www_dir: "/usr/share/nginx/html"
+wordpress_db_name: "wordpress"
+wordpress_db_user: "wpadmin"
+wordpress_db_pass: "wpPassword123!"
+# hack, should pull from dbservers role variables instead
+root_mysql_password: "Password123!"

@@ -1,0 +1,52 @@
+---
+- name: Install Nginx
+  apt: 
+   name: nginx
+  become: true
+- name: Enable Nginx Service
+  become: true
+  service:
+    name: nginx
+    enabled: yes
+- name: Start Nginx Service
+  become: true
+  service:
+    name: nginx
+    state: started
+- name: Open port 80 for nginx
+  shell: ufw allow 'Nginx HTTP'
+  become: true
+- name: Install PHP-FPM and PHP-Mysql
+  apt:
+   name:
+    - php5-fpm
+    - php5-mysql
+  become: true
+- name: Configure PHP.ini Timezone for Toronto
+  become: true
+  lineinfile:
+    dest: /etc/php5/fpm/php.ini
+    regexp: ";date.timezone ="
+    line: "date.timezone = America/Toronto"
+- name: Configure PHP.ini cgifixpath
+  become: true
+  lineinfile:
+    dest: /etc/php5/fpm/php.ini
+    regexp: ";cgi.fix_pathinfo=1"
+    line: "cgi.fix_pathinfo=1"
+  #this should possibly be made dynamic instead of copying a static file..?
+- name: Copy New Default Config to sites-avaialabe
+  become: true
+  copy:
+    src: default
+    dest: /etc/nginx/sites-available/
+- name: Enable PHP-FPM
+  become: true
+  service:
+    name: php5-fpm
+    enabled: yes
+- name: Start PHP-FPM
+  become: true
+  service:
+    name: php5-fpm
+    state: started

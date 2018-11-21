@@ -1,0 +1,10 @@
+# inventory
+
+[tor_ubuntu]
+tor.www01.ubuntutarget ansible_host=10.1.69.19 ansible_user=paulchabot
+
+[www_nginx:children]
+tor_ubuntu
+
+[db_mysql:children]
+tor_ubuntu

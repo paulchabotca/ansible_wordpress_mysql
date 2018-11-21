@@ -1,0 +1,13 @@
+---
+  - name: Simple command (ping).
+    ping:
+  - name: Check if ansible_play_hosts == ansible_play_hosts_all (means UNREACHABLE hosts detected)
+    run_once: True
+    assert:
+      that:
+        - ansible_play_hosts == ansible_play_hosts_all
+  - name: Update Ubuntu Server
+    become: true
+    apt:
+     upgrade: yes
+    when: ansible_os_family == 'Debian'

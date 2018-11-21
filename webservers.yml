@@ -1,0 +1,17 @@
+-
+  hosts: tor_ubuntu
+  name: Web Servers
+  vars_prompt:
+    - name: run_db
+      prompt: "Run Mysql Install?"
+      default: "Y"
+    - name: run_nginx
+      prompt: "Run NGINX Install?"
+      default: "Y"
+  roles:
+    - common
+    - role: webservers
+      when: run_nginx == "Y" or run_nginx == "y"
+    - role: dbservers
+      when: run_db == "Y" or run_db == "y"
+    - wordpress

@@ -1,48 +1,22 @@
 # Ansible Wordpress Mysql Configuration
 ---
-This ansible setup configures an ubuntu server with wordpress and mysql. The ubuntu server was setup in virtualbox with my public key for ssh.
+This ansible setup configures an ubuntu server with nginx, php-fpm and mysql. It also downloads the latest wordpress, creates a db for it and configures it ready for install. The ubuntu server was setup in virtualbox with my public key for ssh. This playbook took approximately 5 hours as I had to learn ansible.
 
 ## Inventory
 base ubuntu 14.05 server configured with my public key
-[wordpress_01]
+[ tor.www01.ubuntutarget ]
 
 ## Playbook
+The playbook has 4 roles.
 
-### run_updates
-Updates the ubuntu server using apt
+### common
+common commands, checks server status and updates the server
 
-### install_nginx
-Installs nginx with php-fpm. 
+### webservers
+installs/enables/starts nginx with php-fpm
 
-### install_wordpress
-downloads wordpress from https://wordpress.org/latest
+### dbservers
+installs/enables/starts mysql and configures root password set in vars, removes anon users and test db
 
-### update_wordpress
-checks wordpress version and updates accordingly.
-
-### install_mysql
-installs and configured mysql server.
-
-### create_database
-configures a database with information provided
-
-### configure_ssl
-installs and configures certbot for Lets Encrypt certificate
-
-### stop_nginx
-stops nginx
-
-### start_nginx
-starts nginx
-
-### reload_nginx
-reloads nginx
-
-### stop_mysql
-stops nginx
-
-### start_mysql
-starts nginx
-
-### reload_mysql
-reloads nginx
+### wordpress
+installs unzip, uses bash script to download latest.zip from wordpress.org, extracts and configures wp-config.php, uses salt.sh to grab a fresh salt from wordpress.org salt gen.

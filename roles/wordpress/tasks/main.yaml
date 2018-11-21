@@ -1,0 +1,49 @@
+---
+  - name: Install unzip for Wordpress Install/Updates
+    become: true
+    apt:
+      name: unzip
+  - name: Create wordpress Database User
+    # creates a db user with privileges on all dbs, fix for just wordpress db
+    mysql_user:
+      login_user: root
+      login_password: "{{ root_mysql_password }}"
+      name: "{{ wordpress_db_user }}"
+      password: "{{ wordpress_db_pass }}"
+      priv: '*.*:ALL'
+      state: present
+  - name: Create wordpress database
+    mysql_db:
+      login_user: root
+      login_password: "{{ root_mysql_password }}"
+      name: "{{ wordpress_db_name }}"
+      state: present
+  - name: Install Wordpress As Default Site
+    become: true
+    script: ./roles/wordpress/files/wordpress.sh
+    args:
+      chdir: "{{ default_www_dir }}"
+      creates: "{{ default_www_dir }}/wp-config.php"
+  - name: Configure Salts in wp-config.php
+    become: true
+    script: ./roles/wordpress/files/salt.sh
+    args:
+      chdir: "{{ default_www_dir }}"
+  - name: Set wp-config.php Wordpress DB
+    become: true
+    lineinfile:
+      dest: "{{ default_www_dir }}/wp-config.php"
+      regexp: "database_name_here"
+      line: "define('DB_NAME', '{{ wordpress_db_name }}');"
+  - name:  Set wp-config.php DB User
+    become: true
+    lineinfile:
+      dest: "{{ default_www_dir }}/wp-config.php"
+      regexp: "username_here"
+      line: "define('DB_USER', '{{ wordpress_db_user }}');"
+  - name:  Set wp-config.php DB Password
+    become: true
+    lineinfile:
+      dest: "{{ default_www_dir }}/wp-config.php"
+      regexp: "password_here"
+      line: "define('DB_PASSWORD', '{{ wordpress_db_pass }}');"
