@@ -18,7 +18,7 @@ Installs nginx with php-fpm.
 downloads wordpress from https://wordpress.org/latest
 
 ### update_wordpress
-checks wordpress version and updates acordingly. 
+checks wordpress version and updates accordingly.
 
 ### install_mysql
 installs and configured mysql server.
