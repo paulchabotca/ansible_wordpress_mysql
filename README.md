@@ -4,45 +4,45 @@ This ansible setup configures an ubuntu server with wordpress and mysql. The ubu
 
 ## Inventory
 base ubuntu 14.05 server configured with my public key
-> [wordpress_01]
+[wordpress_01]
 
 ## Playbook
 
-> run_updates
+### run_updates
 Updates the ubuntu server using apt
 
-> install_nginx
+### install_nginx
 Installs nginx with php-fpm. 
 
-> install_wordpress
+### install_wordpress
 downloads wordpress from https://wordpress.org/latest
 
-> update_wordpress
+### update_wordpress
 checks wordpress version and updates acordingly. 
 
-> install_mysql
+### install_mysql
 installs and configured mysql server.
 
-> create_database
+### create_database
 configures a database with information provided
 
-> configure_ssl
+### configure_ssl
 installs and configures certbot for Lets Encrypt certificate
 
-> stop_nginx
+### stop_nginx
 stops nginx
 
-> start_nginx
+### start_nginx
 starts nginx
 
-> reload_nginx
+### reload_nginx
 reloads nginx
 
-> stop_mysql
+### stop_mysql
 stops nginx
 
-> start_mysql
+### start_mysql
 starts nginx
 
-> reload_mysql
+### reload_mysql
 reloads nginx
