@@ -1,2 +1,3 @@
 ---
+# should probably prompt for this. Should == Definitely
 mysql_root_password: "Password123!"
