@@ -9,5 +9,5 @@
   - name: Update Ubuntu Server
     become: true
     apt:
-     upgrade: yes
+     upgrade: "yes"
     when: ansible_os_family == 'Debian'

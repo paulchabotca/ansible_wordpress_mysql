@@ -21,6 +21,9 @@
     name: mysql
     state: started
 
+# Trying to figure out how to run mysql_secure_install through ansible
+# found a post where it suggests just doing what the script does with ansible modules
+# https://stackoverflow.com/questions/25136498/ansible-answers-to-mysql-secure-installation#answer-25140114
 - name: Sets the root password 
   mysql_user: login_user=root user=root login_password="" password="{{ mysql_root_password }}" host=localhost
 
